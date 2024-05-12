@@ -32,7 +32,9 @@
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
+            openToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
+            turnOnAutosaveToolStripMenuItem = new ToolStripMenuItem();
             txtFileName = new TextBox();
             txtText = new RichTextBox();
             txtTextInformation = new TextBox();
@@ -52,7 +54,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saveToolStripMenuItem, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saveToolStripMenuItem, turnOnAutosaveToolStripMenuItem, openToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.ForeColor = Color.White;
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 19);
@@ -61,26 +63,43 @@
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(112, 22);
+            saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
+            saveToolStripMenuItem.Size = new Size(237, 22);
             saveToolStripMenuItem.Text = "Save as";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click_1;
+            // 
+            // openToolStripMenuItem
+            // 
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
+            openToolStripMenuItem.Size = new Size(237, 22);
+            openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(112, 22);
+            exitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.E;
+            exitToolStripMenuItem.Size = new Size(237, 22);
             exitToolStripMenuItem.Text = "Exit";
+            // 
+            // turnOnAutosaveToolStripMenuItem
+            // 
+            turnOnAutosaveToolStripMenuItem.Name = "turnOnAutosaveToolStripMenuItem";
+            turnOnAutosaveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+            turnOnAutosaveToolStripMenuItem.Size = new Size(237, 22);
+            turnOnAutosaveToolStripMenuItem.Text = "Turn on autosave";
             // 
             // txtFileName
             // 
             txtFileName.BackColor = SystemColors.WindowText;
             txtFileName.BorderStyle = BorderStyle.None;
-            txtFileName.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtFileName.Font = new Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtFileName.ForeColor = Color.Silver;
             txtFileName.Location = new Point(0, 30);
             txtFileName.Margin = new Padding(5);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(718, 19);
+            txtFileName.Size = new Size(718, 18);
             txtFileName.TabIndex = 2;
             txtFileName.Text = "File name";
             txtFileName.TextAlign = HorizontalAlignment.Center;
@@ -92,6 +111,7 @@
             // 
             txtText.BackColor = Color.FromArgb(64, 64, 64);
             txtText.BorderStyle = BorderStyle.None;
+            txtText.Font = new Font("Arial", 11.25F);
             txtText.ForeColor = Color.White;
             txtText.Location = new Point(12, 60);
             txtText.Name = "txtText";
@@ -104,12 +124,13 @@
             // 
             txtTextInformation.BackColor = Color.Black;
             txtTextInformation.BorderStyle = BorderStyle.None;
+            txtTextInformation.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtTextInformation.ForeColor = Color.White;
             txtTextInformation.ImeMode = ImeMode.Disable;
             txtTextInformation.Location = new Point(12, 357);
             txtTextInformation.Name = "txtTextInformation";
             txtTextInformation.ReadOnly = true;
-            txtTextInformation.Size = new Size(694, 25);
+            txtTextInformation.Size = new Size(694, 18);
             txtTextInformation.TabIndex = 3;
             // 
             // NewFile
@@ -143,5 +164,7 @@
         private RichTextBox txtText;
         private TextBox txtTextInformation;
         private ToolStripMenuItem saveToolStripMenuItem;
+        private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem turnOnAutosaveToolStripMenuItem;
     }
 }

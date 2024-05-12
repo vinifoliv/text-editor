@@ -35,8 +35,8 @@
             openToolStripMenuItem1 = new ToolStripMenuItem();
             toolStripSeparator = new ToolStripSeparator();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
-            lblGreeting = new Label();
             aboutToolStripMenuItem = new ToolStripMenuItem();
+            lblGreeting = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -62,7 +62,7 @@
             newToolStripMenuItem1.ImageTransparentColor = Color.Magenta;
             newToolStripMenuItem1.Name = "newToolStripMenuItem1";
             newToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.N;
-            newToolStripMenuItem1.Size = new Size(180, 22);
+            newToolStripMenuItem1.Size = new Size(146, 22);
             newToolStripMenuItem1.Text = "&New";
             newToolStripMenuItem1.Click += newToolStripMenuItem1_Click;
             // 
@@ -72,38 +72,38 @@
             openToolStripMenuItem1.ImageTransparentColor = Color.Magenta;
             openToolStripMenuItem1.Name = "openToolStripMenuItem1";
             openToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.O;
-            openToolStripMenuItem1.Size = new Size(180, 22);
+            openToolStripMenuItem1.Size = new Size(146, 22);
             openToolStripMenuItem1.Text = "&Open";
             // 
             // toolStripSeparator
             // 
             toolStripSeparator.Name = "toolStripSeparator";
-            toolStripSeparator.Size = new Size(177, 6);
+            toolStripSeparator.Size = new Size(143, 6);
             // 
             // exitToolStripMenuItem1
             // 
             exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
             exitToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.E;
-            exitToolStripMenuItem1.Size = new Size(180, 22);
+            exitToolStripMenuItem1.Size = new Size(146, 22);
             exitToolStripMenuItem1.Text = "E&xit";
             exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
-            // 
-            // lblGreeting
-            // 
-            lblGreeting.AutoSize = true;
-            lblGreeting.Font = new Font("Lucida Console", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblGreeting.ForeColor = Color.FromArgb(0, 192, 0);
-            lblGreeting.Location = new Point(288, 185);
-            lblGreeting.Name = "lblGreeting";
-            lblGreeting.Size = new Size(201, 37);
-            lblGreeting.TabIndex = 1;
-            lblGreeting.Text = "Welcome!";
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(52, 20);
             aboutToolStripMenuItem.Text = "&About";
+            // 
+            // lblGreeting
+            // 
+            lblGreeting.AutoSize = true;
+            lblGreeting.Font = new Font("Lucida Console", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblGreeting.ForeColor = Color.FromArgb(0, 192, 0);
+            lblGreeting.Location = new Point(285, 209);
+            lblGreeting.Name = "lblGreeting";
+            lblGreeting.Size = new Size(201, 37);
+            lblGreeting.TabIndex = 1;
+            lblGreeting.Text = "Welcome!";
             // 
             // Form1
             // 
