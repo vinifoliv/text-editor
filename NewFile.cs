@@ -7,22 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Threading;
 namespace text_editor
 {
     public partial class NewFile : Form
     {
-        private const string message = "File name";
+        private const string _message = "File name";
+        private bool _isFileSaved = false;
+        private string _filePath = "";
 
         public NewFile()
         {
             InitializeComponent();
+            txtFileName.Height = 15;
         }
 
         //File name editing
         private void txtFileName_Enter(object sender, EventArgs e)
         {
-            if (txtFileName.Text == message)
+            if (txtFileName.Text == _message)
             {
                 setForeColor(false);
             }
@@ -41,60 +44,72 @@ namespace text_editor
         {
             if (isStandardMessage)
             {
-                txtFileName.ForeColor = Color.DarkGray;
-                txtFileName.Text = message;
+                txtFileName.ForeColor = Color.LightGray;
+                txtFileName.Text = _message;
                 return;
             }
             txtFileName.Text = "";
-            txtFileName.ForeColor = Color.Black;
+            txtFileName.ForeColor = Color.White;
         }
+
+        //KeyDown handling
+        private void NewFile_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
+
+        private void txtText_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
+
+        private void txtFileName_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
+       
+        public void HandleShortcutKeys(KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.S:
+                        SaveFile();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        //Menustrip handling
+        private void saveToolStripMenuItem_Click_1(object sender, EventArgs e) => SaveFile();
 
         //File saving
         private void SaveFile()
         {
-            SaveFileDialog saveWindow = new SaveFileDialog();
-            saveWindow.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            saveWindow.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-            saveWindow.DefaultExt = ".txt";
-            saveWindow.FileName = $"{txtFileName.Text}.txt";
-
-            if (saveWindow.ShowDialog() == DialogResult.OK)
+            if (_isFileSaved)
             {
-                string filePath = saveWindow.FileName;
+                File.WriteAllText(_filePath, txtText.Text);
+                PrintSaveMessage();
+            }
+            else
+            {
+                SaveFileDialog saveWindow = new SaveFileDialog();
+                saveWindow.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                saveWindow.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                saveWindow.DefaultExt = ".txt";
+                saveWindow.FileName = $"{txtFileName.Text}.txt";
 
-                using (StreamWriter writer = new StreamWriter(filePath))
+                if (saveWindow.ShowDialog() == DialogResult.OK)
                 {
-                    writer.Write(txtText.Text);
+                    _filePath = saveWindow.FileName;
+
+                    using (StreamWriter writer = new StreamWriter(_filePath))
+                    {
+                        writer.Write(txtText.Text);
+                    }
                 }
-            }
-        }
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFile();
-        }
-
-        private void NewFile_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                SaveFile();
+                _isFileSaved = true;
+                PrintSaveMessage();
             }
         }
 
-        private void txtText_KeyDown(object sender, KeyEventArgs e)
+        private void PrintSaveMessage()
         {
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                SaveFile();
-            }
-        }
-
-        private void txtFileName_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                SaveFile();
-            }
+            txtTextInformation.Text = $@"{txtFileName.Text} succesfully saved!";
         }
     }
 }

@@ -28,86 +28,98 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             menuStrip1 = new MenuStrip();
-            fileToolStripMenuItem = new ToolStripMenuItem();
-            newToolStripMenuItem = new ToolStripMenuItem();
-            openToolStripMenuItem = new ToolStripMenuItem();
-            autosaveToolStripMenuItem = new ToolStripMenuItem();
-            saveAsToolStripMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem = new ToolStripMenuItem();
+            fileToolStripMenuItem1 = new ToolStripMenuItem();
+            newToolStripMenuItem1 = new ToolStripMenuItem();
+            openToolStripMenuItem1 = new ToolStripMenuItem();
+            toolStripSeparator = new ToolStripSeparator();
+            exitToolStripMenuItem1 = new ToolStripMenuItem();
             lblGreeting = new Label();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem1, aboutToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
-            // fileToolStripMenuItem
+            // fileToolStripMenuItem1
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, autosaveToolStripMenuItem, saveAsToolStripMenuItem, exitToolStripMenuItem });
-            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
-            fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem1, openToolStripMenuItem1, toolStripSeparator, exitToolStripMenuItem1 });
+            fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
+            fileToolStripMenuItem1.Size = new Size(37, 20);
+            fileToolStripMenuItem1.Text = "&File";
             // 
-            // newToolStripMenuItem
+            // newToolStripMenuItem1
             // 
-            newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(180, 22);
-            newToolStripMenuItem.Text = "New";
-            newToolStripMenuItem.Click += newToolStripMenuItem_Click;
+            newToolStripMenuItem1.Image = (Image)resources.GetObject("newToolStripMenuItem1.Image");
+            newToolStripMenuItem1.ImageTransparentColor = Color.Magenta;
+            newToolStripMenuItem1.Name = "newToolStripMenuItem1";
+            newToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.N;
+            newToolStripMenuItem1.Size = new Size(180, 22);
+            newToolStripMenuItem1.Text = "&New";
+            newToolStripMenuItem1.Click += newToolStripMenuItem1_Click;
             // 
-            // openToolStripMenuItem
+            // openToolStripMenuItem1
             // 
-            openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(180, 22);
-            openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem1.Image = (Image)resources.GetObject("openToolStripMenuItem1.Image");
+            openToolStripMenuItem1.ImageTransparentColor = Color.Magenta;
+            openToolStripMenuItem1.Name = "openToolStripMenuItem1";
+            openToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.O;
+            openToolStripMenuItem1.Size = new Size(180, 22);
+            openToolStripMenuItem1.Text = "&Open";
             // 
-            // autosaveToolStripMenuItem
+            // toolStripSeparator
             // 
-            autosaveToolStripMenuItem.Name = "autosaveToolStripMenuItem";
-            autosaveToolStripMenuItem.Size = new Size(180, 22);
-            autosaveToolStripMenuItem.Text = "Autosave";
+            toolStripSeparator.Name = "toolStripSeparator";
+            toolStripSeparator.Size = new Size(177, 6);
             // 
-            // saveAsToolStripMenuItem
+            // exitToolStripMenuItem1
             // 
-            saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(180, 22);
-            saveAsToolStripMenuItem.Text = "Save as";
-            // 
-            // exitToolStripMenuItem
-            // 
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
-            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            exitToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.E;
+            exitToolStripMenuItem1.Size = new Size(180, 22);
+            exitToolStripMenuItem1.Text = "E&xit";
+            exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
             // lblGreeting
             // 
             lblGreeting.AutoSize = true;
             lblGreeting.Font = new Font("Lucida Console", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblGreeting.ForeColor = Color.FromArgb(0, 192, 0);
             lblGreeting.Location = new Point(288, 185);
             lblGreeting.Name = "lblGreeting";
             lblGreeting.Size = new Size(201, 37);
             lblGreeting.TabIndex = 1;
             lblGreeting.Text = "Welcome!";
             // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(52, 20);
+            aboutToolStripMenuItem.Text = "&About";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(64, 64, 64);
+            BackColor = Color.Black;
             ClientSize = new Size(800, 450);
             Controls.Add(lblGreeting);
             Controls.Add(menuStrip1);
             ForeColor = Color.White;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "Form1";
-            Text = "Text Editor";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Editor";
+            KeyDown += Form1_KeyDown;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -117,12 +129,12 @@
         #endregion
 
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem newToolStripMenuItem;
-        private ToolStripMenuItem openToolStripMenuItem;
-        private ToolStripMenuItem autosaveToolStripMenuItem;
-        private ToolStripMenuItem saveAsToolStripMenuItem;
-        private ToolStripMenuItem exitToolStripMenuItem;
         private Label lblGreeting;
+        private ToolStripMenuItem fileToolStripMenuItem1;
+        private ToolStripMenuItem newToolStripMenuItem1;
+        private ToolStripMenuItem openToolStripMenuItem1;
+        private ToolStripSeparator toolStripSeparator;
+        private ToolStripMenuItem exitToolStripMenuItem1;
+        private ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
