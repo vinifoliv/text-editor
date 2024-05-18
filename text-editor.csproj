@@ -14,8 +14,4 @@
     <Content Include="assets\favicon.ico" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="classes\" />
-  </ItemGroup>
-
 </Project>

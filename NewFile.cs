@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Reflection.Metadata.Ecma335;
+using text_editor.classes;
+using System.Text.Json;
+
 namespace text_editor
 {
     public partial class NewFile : Form
@@ -16,28 +19,112 @@ namespace text_editor
         private const string _message = "File name"; //Standard file name if not specified by the user
         private bool _isFileSaved = false; //Checks if file is save so as not to execute "Save as" routines
         private string _filePath = ""; //File path in user's computer directories
+        private JSONSerializer _serializer = new JSONSerializer();
+        private Settings _settings;
 
         public NewFile()
         {
             InitializeComponent();
-            txtFileName.Height = 15;
+
+            // Configuring designer components
+            ResizeComponents();
+
+            // Importing settings from JSON
+            _settings = _serializer.ReadJSON();
         }
+
+// GENERAL EVENT HANDLING ==========
+
+        // FontStyle change
+        private void ChangeFontStyle(FontStyle fontStyle) => this.txtText.Font = new Font(txtText.Font, fontStyle);
+
+        // Autosave setting change
+        private void turnOnAutosaveToolStripMenuItem_Click(object sender, EventArgs e) => ChangeAutoSave();
+        private void ChangeAutoSave()
+        {
+            if (_settings.AutoSave)
+            {
+                _settings.setAutoSave(true);
+                _serializer.CreateJSON(_settings);
+                return;
+            }
+            _settings.setAutoSave(true);
+            _serializer.CreateJSON(_settings);
+        }
+        private void txtText_TextChanged(object sender, EventArgs e) 
+        { 
+            if (_settings.AutoSave && _isFileSaved) SaveFile(); 
+        }
+
+        // Shortcuts handling
+        public void HandleShortcutKeys(KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.B:
+                        if (!txtText.Font.Bold)
+                        {
+                            ChangeFontStyle(FontStyle.Bold);
+                            return;
+                        }
+                        ChangeFontStyle(FontStyle.Regular);
+                        break;
+
+                    case Keys.I:
+                        if (!txtText.Font.Italic)
+                        {
+                            ChangeFontStyle(FontStyle.Italic);
+                            return;
+                        }
+                        ChangeFontStyle(FontStyle.Regular);
+                        break;
+
+                    case Keys.S:
+                        if (e.Shift) 
+                        {
+                            ChangeAutoSave();
+                            return;
+                        }
+                        SaveFile();
+                        break;
+
+                    case Keys.O:
+                        OpenFile();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void ResizeComponents()
+        {
+            this.txtFileName.Width = this.Width;
+            this.txtText.Width = this.Width;
+            this.txtTextInformation.Width = this.Width;
+        }
+        private void NewFile_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
+
+        private void txtText_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
+
+        private void txtFileName_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
+
+        //Menustrip handling
+        private void saveToolStripMenuItem_Click_1(object sender, EventArgs e) => SaveFile();
+        private void openToolStripMenuItem_Click(object sender, EventArgs e) => OpenFile();
 
         //File name editing
         private void txtFileName_Enter(object sender, EventArgs e)
         {
-            if (txtFileName.Text == _message)
-            {
-                setForeColor(false);
-            }
+            if (txtFileName.Text == _message) setForeColor(false);
         }
 
         private void txtFileName_Leave(object sender, EventArgs e)
         {
-            if (txtFileName.Text == "" || txtFileName.Text == null)
-            {
-                setForeColor(true);
-            }
+            if (txtFileName.Text == "" || txtFileName.Text == null) setForeColor(true);
         }
 
         //Set the default font color for the standard message or user-defined file name
@@ -53,72 +140,39 @@ namespace text_editor
             txtFileName.ForeColor = Color.White;
         }
 
-        //KeyDown handling
-        private void NewFile_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
-
-        private void txtText_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
-
-        private void txtFileName_KeyDown(object sender, KeyEventArgs e) => HandleShortcutKeys(e);
-
-        public void HandleShortcutKeys(KeyEventArgs e)
-        {
-            if (e.Control)
-            {
-                switch (e.KeyCode)
-                {
-                    case Keys.S:
-                        SaveFile();
-                        break;
-                    case Keys.O:
-                        OpenFile();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        //Menustrip handling
-        private void saveToolStripMenuItem_Click_1(object sender, EventArgs e) => SaveFile();
-        private void openToolStripMenuItem_Click(object sender, EventArgs e) => OpenFile();
-
-        //File saving
+ // FILE SAVING ==========
         private void SaveFile()
         {
             if (_isFileSaved)
             {
                 File.WriteAllText(_filePath, txtText.Text);
                 PrintSaveMessage();
+                return;
             }
-            else
+
+            SaveFileDialog saveWindow = new SaveFileDialog();
+            saveWindow.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            saveWindow.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+            saveWindow.DefaultExt = ".txt";
+            saveWindow.FileName = $"{txtFileName.Text}.txt";
+
+            if (saveWindow.ShowDialog() == DialogResult.OK)
             {
-                SaveFileDialog saveWindow = new SaveFileDialog();
-                saveWindow.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                saveWindow.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-                saveWindow.DefaultExt = ".txt";
-                saveWindow.FileName = $"{txtFileName.Text}.txt";
+                _filePath = saveWindow.FileName;
 
-                if (saveWindow.ShowDialog() == DialogResult.OK)
+                using (StreamWriter writer = new StreamWriter(_filePath))
                 {
-                    _filePath = saveWindow.FileName;
-
-                    using (StreamWriter writer = new StreamWriter(_filePath))
-                    {
-                        writer.Write(txtText.Text);
-                    }
+                    writer.Write(txtText.Text);
                 }
                 _isFileSaved = true;
                 PrintSaveMessage();
             }
         }
 
-        private void PrintSaveMessage()
-        {
-            txtTextInformation.Text = $@"{txtFileName.Text} succesfully saved!";
-        }
+        private void PrintSaveMessage() => txtTextInformation.Text = $@"{txtFileName.Text} succesfully saved!";
 
-        
-        private void OpenFile() 
+// FILE OPENING ==========
+        private void OpenFile()
         {
             var text = string.Empty;
             var filePath = string.Empty;

@@ -32,9 +32,9 @@
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
+            turnOnAutosaveToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
-            turnOnAutosaveToolStripMenuItem = new ToolStripMenuItem();
             txtFileName = new TextBox();
             txtText = new RichTextBox();
             txtTextInformation = new TextBox();
@@ -68,6 +68,14 @@
             saveToolStripMenuItem.Text = "Save as";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click_1;
             // 
+            // turnOnAutosaveToolStripMenuItem
+            // 
+            turnOnAutosaveToolStripMenuItem.Name = "turnOnAutosaveToolStripMenuItem";
+            turnOnAutosaveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+            turnOnAutosaveToolStripMenuItem.Size = new Size(237, 22);
+            turnOnAutosaveToolStripMenuItem.Text = "Turn on autosave";
+            turnOnAutosaveToolStripMenuItem.Click += turnOnAutosaveToolStripMenuItem_Click;
+            // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
@@ -83,15 +91,9 @@
             exitToolStripMenuItem.Size = new Size(237, 22);
             exitToolStripMenuItem.Text = "Exit";
             // 
-            // turnOnAutosaveToolStripMenuItem
-            // 
-            turnOnAutosaveToolStripMenuItem.Name = "turnOnAutosaveToolStripMenuItem";
-            turnOnAutosaveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
-            turnOnAutosaveToolStripMenuItem.Size = new Size(237, 22);
-            turnOnAutosaveToolStripMenuItem.Text = "Turn on autosave";
-            // 
             // txtFileName
             // 
+            txtFileName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtFileName.BackColor = SystemColors.WindowText;
             txtFileName.BorderStyle = BorderStyle.None;
             txtFileName.Font = new Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -109,8 +111,10 @@
             // 
             // txtText
             // 
+            txtText.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtText.BackColor = Color.FromArgb(64, 64, 64);
             txtText.BorderStyle = BorderStyle.None;
+            txtText.Cursor = Cursors.IBeam;
             txtText.Font = new Font("Arial", 11.25F);
             txtText.ForeColor = Color.White;
             txtText.Location = new Point(12, 60);
@@ -118,10 +122,12 @@
             txtText.Size = new Size(694, 291);
             txtText.TabIndex = 1;
             txtText.Text = "";
+            txtText.TextChanged += txtText_TextChanged;
             txtText.KeyDown += txtText_KeyDown;
             // 
             // txtTextInformation
             // 
+            txtTextInformation.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtTextInformation.BackColor = Color.Black;
             txtTextInformation.BorderStyle = BorderStyle.None;
             txtTextInformation.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -148,6 +154,7 @@
             MainMenuStrip = menuStrip1;
             Margin = new Padding(5);
             Name = "NewFile";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = " ";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

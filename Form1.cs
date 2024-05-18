@@ -1,4 +1,4 @@
-using System.Diagnostics.Eventing.Reader;
+using text_editor.classes;
 
 namespace text_editor
 {
@@ -7,6 +7,10 @@ namespace text_editor
         public Form1()
         {
             InitializeComponent();
+
+            JSONSerializer serializer = new JSONSerializer();
+            bool jsonExists = JSONSerializer.JSONExists();
+            if (!jsonExists) serializer.CreateJSON(null);
         }
 
         //New file form creation

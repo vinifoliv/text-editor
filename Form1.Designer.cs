@@ -62,7 +62,7 @@
             newToolStripMenuItem1.ImageTransparentColor = Color.Magenta;
             newToolStripMenuItem1.Name = "newToolStripMenuItem1";
             newToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.N;
-            newToolStripMenuItem1.Size = new Size(146, 22);
+            newToolStripMenuItem1.Size = new Size(180, 22);
             newToolStripMenuItem1.Text = "&New";
             newToolStripMenuItem1.Click += newToolStripMenuItem1_Click;
             // 
@@ -96,6 +96,7 @@
             // 
             // lblGreeting
             // 
+            lblGreeting.Anchor = AnchorStyles.None;
             lblGreeting.AutoSize = true;
             lblGreeting.Font = new Font("Lucida Console", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblGreeting.ForeColor = Color.FromArgb(0, 192, 0);
